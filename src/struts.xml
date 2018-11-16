@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="demo1" extends="struts-default" namespace="/">
+		<!-- 自定义拦截器 -->
+		<interceptors>
+			<interceptor name="authorty" class="com.ssh_1.interceptor.AuthorityInterceptor" />
+		</interceptors>
+	
+		<!-- 新闻类别的action -->
+		<action name="category_*" class="categoryAction" method="{1}">
+			<!-- 使用自定义拦截器 -->
+			<interceptor-ref name="authorty">
+				<!-- 配置action里面某些方法不执行 -->
+				<param name="excludeMethods">user_login</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			
+			<!-- 拦截器检测用户没有登录  -->
+			<result name="nologin">/nologin.jsp</result>
+		
+			<!-- 跳转到类型发布页面 -->
+			<result name="toAddCategory">/addCategory.jsp</result>
+			
+			<!-- 校验用户发布的类型是否为空 -->
+			<result name="inputAdd">/addCategory.jsp</result>
+			
+			<!-- 类型发布成功后跳转到类型查看页面 -->
+			<result name="addCategory" type="redirectAction">category_findAllByPage</result>
+			
+			<!-- 跳转到类型查看页面 -->
+			<result name="findAllByPage">/showCategory.jsp</result>
+			
+			<!-- 删除类型，成功后跳转到类型查看页面 -->
+			<result name="deleteCategory" type="redirectAction">category_findAllByPage</result>
+			
+			<!-- 到修改类型页面 -->
+			<result name="toEditCategory">/editCategory.jsp</result>
+			
+			<!-- 修改类型，成功后跳转到类型查看页面 -->
+			<result name="editCategory" type="redirectAction">category_findAllByPage</result>
+		</action>
+		
+		<!-- 新闻处理的action -->
+		<action name="news_*" class="newsAction" method="{1}">
+			<!-- 使用自定义拦截器 -->
+			<interceptor-ref name="authorty">
+				<!-- 配置action里面某些方法不执行 -->
+				<param name="excludeMethods">user_login</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			
+			<!-- 拦截器检测用户没有登录  -->
+			<result name="nologin">/nologin.jsp</result>
+		
+			<!-- 校验用户发布新闻时是否符合规定 -->
+			<result name="inputAddUser">/addNews.jsp</result>
+			
+			<!-- 校验管理员发布新闻时是否符合规定 -->
+			<result name="inputAdd">/addNews_admin.jsp</result>
+			
+			<!-- 跳转到管理员新闻发布界面 -->
+			<result name="toAddNews">/addNews_admin.jsp</result>
+			
+			<!-- 跳转到用户新闻发布界面 -->
+			<result name="toAddNewsUser">/addNews.jsp</result>
+			
+			<!-- 新闻发布成功后跳转到用户新闻查看界面 -->
+			<result name="addNewsUser" type="redirectAction">news_findAllByPageIndex</result>
+			
+			<!-- 新闻发布成功后跳转到管理员新闻查看界面 -->
+			<result name="addNews" type="redirectAction">news_findAllByPage</result>
+			
+			<!-- 新闻发布成功后跳转到用户新闻查看界面 -->
+			<result name="addNewsUser" type="redirectAction">news_findAllByPageIndex</result>
+			
+			<!-- 跳转到新闻管理员查看界面 -->
+			<result name="findAllByPage">/showNews.jsp</result>
+			
+			<!-- 跳转到新闻用户查看界面 -->
+			<result name="findAllByPageIndex">/index.jsp</result>
+			
+			<!-- 跳转到管理员新闻查看详情界面 -->
+			<result name="showNewsUser">/showOneNews_user.jsp</result>
+			
+			<!-- 跳转到管理员新闻查看详情界面 -->
+			<result name="showNews">/showOneNews.jsp</result>
+			
+			<!-- 删除新闻之后跳转到新闻查看界面 -->
+			<result name="deleteNews" type="redirectAction">news_findAllByPage</result>
+			
+			<!-- 跳转到新闻修改界面 -->
+			<result name="toEditNews">/editNews.jsp</result>
+			
+			<!-- 修改新闻之后跳转到新闻查看界面 -->
+			<result name="editNews" type="redirectAction">news_findAllByPage</result>
+			
+			<!-- 校验是否有选择类型 -->
+			<result name="inputCategoryadmin">/showNews.jsp</result>
+			
+			<!-- 校验用户是否有选择类型 -->
+			<result name="inputCategory">/index.jsp</result>
+			
+			<!-- 根据类别查找新闻 -->
+			<result name="findNewsPageByCategory">/showNews.jsp</result>
+			
+			<!-- 用户根据类别查找新闻 -->
+			<result name="findNewsPageByCategoryIndex">/index.jsp</result>
+			
+			<!-- 校验用户是否输入标题 -->
+			<result name="inputTitleUser">/index.jsp</result>
+			
+			<!-- 用户根据标题查找新闻 -->
+			<result name="findByTitle">/index.jsp</result>
+			
+			<!-- 校验用户是否输入时间 -->
+			<result name="inputTimeUser">/index.jsp</result>
+			
+			<!-- 用户根据时间查找新闻 -->
+			<result name="findByTime">/index_time.jsp</result>
+		</action>
+		
+		<!-- 用户的action -->
+		<action name="user_*" class="userAction" method="{1}">
+			<!-- 使用自定义拦截器 -->
+			<interceptor-ref name="authorty">
+				<!-- 配置action里面某些方法不执行 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			
+			<!-- 拦截器检测用户没有登录  -->
+			<result name="nologin">/nologin.jsp</result>
+		
+			<!-- 注册页面校验用户输入的数据 -->
+			<result name="inputRegister">/register.jsp</result>
+			
+			<!-- 登录页面校验用户输入的数据 -->
+			<result name="inputLogin">/login.jsp</result>
+			
+			<!-- 用户登录失败 -->
+			<result name="login">/login.jsp</result>
+			
+			<!-- 用户登录成功 -->
+			<result name="loginSuccess">/welcome.jsp</result>
+			
+			<!-- 管理员登陆成功 -->
+			<result name="adminLoginSuccess">/index_admin.jsp</result>
+			
+			<!-- 用户退出 -->
+			<result name="quit">/login.jsp</result>
+			
+			<!-- 跳转到注册页面 -->
+			<result name="toRegisterPage">/register.jsp</result>
+			
+			<!-- 用户注册 -->
+			<result name="register">/login.jsp</result>
+		</action>
+	</package>
+</struts>

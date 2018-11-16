@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dtd约束 -->
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- 配置数据库信息，交给c3p0管理 -->
+		<!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hiberantetest</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property> -->
+	
+		<!-- 配置hibernate信息-->
+		<property name="hibernate.show_sql">true</property>   <!-- 输出底层sql语句 -->
+		<property name="hibernate.format_sql">true</property>   <!-- 输出底层sql语句格式 -->	
+		<property name="hibernate.hbm2ddl.auto">update</property>   <!-- 有表更新，无表创建 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> <!-- 识别数据库方言（某个数据库特有的） -->
+		
+		<!-- 把映射文件放到核心配置文件中 -->
+		<mapping resource="com/ssh_1/entity/Category.hbm.xml"/>
+		<mapping resource="com/ssh_1/entity/News.hbm.xml"/>
+		<mapping resource="com/ssh_1/entity/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>	
+
+	

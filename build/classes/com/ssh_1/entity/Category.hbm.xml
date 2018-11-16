@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-23 12:23:02 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.ssh_1.entity.Category" table="t_category">
+        <id name="cid" type="java.lang.Integer">
+            <column name="cid" />
+            <generator class="native" />
+        </id>
+        <property name="cname" type="java.lang.String">
+            <column name="cname" />
+        </property>
+
+        <!-- 对应多条新闻			级联删除 -->        
+        <set name="news" cascade="delete">
+            <key>
+                <column name="c_id" />
+            </key>
+            <one-to-many class="com.ssh_1.entity.News" />
+        </set>
+    </class>
+</hibernate-mapping>
