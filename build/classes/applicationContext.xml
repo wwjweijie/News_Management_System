@@ -16,8 +16,8 @@
 		<!-- 注入属性值 -->
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hiberantetest" />
-		<property name="password" value="root" />
-		<property name="user" value="root" />
+		<property name="password" value="your database username" />
+		<property name="user" value="your database password" />
 	</bean>
 	
 	<!-- 事务管理器 -->
